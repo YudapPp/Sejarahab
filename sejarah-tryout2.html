@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sejarah Tryout 2 — Kelas 12 SMK</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0b;
+    --paper: #faf8f3;
+    --cream: #f2ede3;
+    --gold: #c9a84c;
+    --gold-light: #e8d49a;
+    --red: #b83232;
+    --green: #2d6a4f;
+    --blue: #1a3a5c;
+    --blue-light: #d4e4f7;
+    --muted: #6b6458;
+    --border: #d4c9b5;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ─── NAV ─────────────────────────────── */
+  nav {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 3px solid var(--gold);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    letter-spacing: .02em;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-tabs {
+    display: flex;
+    gap: .25rem;
+    list-style: none;
+  }
+  .nav-tabs button {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .85rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: .45rem .85rem;
+    border-radius: 4px;
+    transition: all .2s;
+    letter-spacing: .03em;
+  }
+  .nav-tabs button:hover { color: var(--paper); background: rgba(255,255,255,.08); }
+  .nav-tabs button.active { color: var(--gold); background: rgba(201,168,76,.12); }
+
+  /* ─── HERO ────────────────────────────── */
+  .hero {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 4rem 2rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: 
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(201,168,76,.07) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(201,168,76,.07) 40px);
+  }
+  .hero-badge {
+    display: inline-block;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: .72rem;
+    letter-spacing: .12em;
+    padding: .3rem .9rem;
+    border-radius: 2px;
+    margin-bottom: 1.2rem;
+    position: relative;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    position: relative;
+    margin-bottom: .7rem;
+  }
+  .hero h1 em { color: var(--gold); font-style: normal; }
+  .hero p {
+    color: #aaa;
+    font-size: .95rem;
+    font-weight: 300;
+    position: relative;
+  }
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    position: relative;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat strong {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--gold);
+  }
+  .hero-stat span { font-size: .75rem; color: #888; letter-spacing: .06em; text-transform: uppercase; }
+
+  /* ─── PAGES ───────────────────────────── */
+  .page { display: none; animation: fadeIn .3s ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+
+  /* ─── MATERI ──────────────────────────── */
+  .materi-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+  }
+
+  .topic-selector {
+    display: flex;
+    gap: .6rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+  .topic-btn {
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: .8rem;
+    font-weight: 500;
+    padding: .4rem .9rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all .2s;
+    letter-spacing: .02em;
+  }
+  .topic-btn:hover { border-color: var(--gold); color: var(--ink); }
+  .topic-btn.active { background: var(--ink); border-color: var(--ink); color: var(--gold); }
+
+  .topic-panel { display: none; }
+  .topic-panel.active { display: block; animation: fadeIn .25s ease; }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: .3rem;
+    padding-bottom: .6rem;
+    border-bottom: 2px solid var(--gold);
+  }
+  .section-sub {
+    font-size: .8rem;
+    color: var(--muted);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .subsection {
+    margin: 1.8rem 0;
+  }
+  .subsection h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--red);
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    margin-bottom: .8rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .subsection h3::before {
+    content: '';
+    display: inline-block;
+    width: 16px; height: 3px;
+    background: var(--red);
+    border-radius: 2px;
+  }
+
+  .poin-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+  }
+  .poin-list li {
+    display: flex;
+    gap: .75rem;
+    font-size: .9rem;
+    line-height: 1.6;
+    color: #2a2622;
+  }
+  .poin-list li::before {
+    content: '▸';
+    color: var(--gold);
+    flex-shrink: 0;
+    font-size: .85rem;
+    margin-top: .18rem;
+  }
+  .poin-list li strong { color: var(--blue); }
+
+  /* ─── TABLE ───────────────────────────── */
+  .m-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: .85rem;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .m-table th {
+    background: var(--blue);
+    color: #fff;
+    padding: .65rem .9rem;
+    text-align: left;
+    font-weight: 600;
+    letter-spacing: .03em;
+    font-size: .8rem;
+  }
+  .m-table td {
+    padding: .6rem .9rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.5;
+    color: #2a2622;
+  }
+  .m-table tr:last-child td { border-bottom: none; }
+  .m-table tr:nth-child(even) td { background: var(--cream); }
+
+  .highlight-box {
+    background: var(--blue-light);
+    border-left: 4px solid var(--blue);
+    padding: .9rem 1.1rem;
+    border-radius: 0 6px 6px 0;
+    margin: 1rem 0;
+    font-size: .88rem;
+    line-height: 1.6;
+  }
+  .highlight-box strong { color: var(--blue); }
+
+  /* ─── QUIZ ────────────────────────────── */
+  .quiz-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  /* Quiz config */
+  .quiz-config {
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem;
+  }
+  .quiz-config h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: .4rem;
+    color: var(--blue);
+  }
+  .quiz-config p { color: var(--muted); font-size: .88rem; margin-bottom: 1.5rem; }
+
+  .config-group { margin-bottom: 1.2rem; }
+  .config-group label {
+    display: block;
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: .5rem;
+    font-family: 'DM Mono', monospace;
+  }
+  .config-options {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+  }
+  .config-opt {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: .85rem;
+    font-weight: 500;
+    padding: .45rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .config-opt:hover { border-color: var(--blue); }
+  .config-opt.selected { background: var(--blue); border-color: var(--blue); color: #fff; }
+
+  .btn-start {
+    width: 100%;
+    margin-top: 1.5rem;
+    background: var(--gold);
+    border: none;
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: .85rem;
+    border-radius: 6px;
+    cursor: pointer;
+    letter-spacing: .04em;
+    transition: all .2s;
+  }
+  .btn-start:hover { background: #b8933e; transform: translateY(-1px); }
+
+  /* Quiz header */
+  .quiz-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .quiz-progress-text {
+    font-family: 'DM Mono', monospace;
+    font-size: .8rem;
+    color: var(--muted);
+  }
+  .quiz-progress-text strong { color: var(--ink); font-size: 1rem; }
+  .quiz-timer {
+    font-family: 'DM Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--blue);
+    background: var(--blue-light);
+    padding: .3rem .7rem;
+    border-radius: 4px;
+  }
+  .quiz-timer.warning { color: var(--red); background: #fde8e8; }
+
+  .progress-bar {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 2px;
+    transition: width .4s ease;
+  }
+
+  /* Question card */
+  .q-card {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 1.75rem;
+    box-shadow: 0 2px 16px rgba(0,0,0,.05);
+  }
+  .q-topic-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: .7rem;
+    letter-spacing: .1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: .75rem;
+  }
+  .q-text {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+    color: var(--ink);
+  }
+  .q-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--blue);
+    margin-right: .4rem;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+  }
+  .opt-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: .85rem;
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    padding: .75rem 1rem;
+    cursor: pointer;
+    transition: all .2s;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .9rem;
+    line-height: 1.5;
+    color: var(--ink);
+    width: 100%;
+  }
+  .opt-btn:hover:not(:disabled) { border-color: var(--blue); background: var(--blue-light); }
+  .opt-btn .opt-letter {
+    font-family: 'DM Mono', monospace;
+    font-size: .75rem;
+    font-weight: 500;
+    background: var(--border);
+    color: var(--muted);
+    border-radius: 3px;
+    padding: .15rem .4rem;
+    flex-shrink: 0;
+    margin-top: .1rem;
+    transition: all .2s;
+  }
+  .opt-btn:hover:not(:disabled) .opt-letter { background: var(--blue); color: #fff; }
+  .opt-btn.selected { border-color: var(--blue); background: var(--blue-light); }
+  .opt-btn.selected .opt-letter { background: var(--blue); color: #fff; }
+  .opt-btn.correct { border-color: var(--green); background: #e8f5ee; }
+  .opt-btn.correct .opt-letter { background: var(--green); color: #fff; }
+  .opt-btn.wrong { border-color: var(--red); background: #fde8e8; }
+  .opt-btn.wrong .opt-letter { background: var(--red); color: #fff; }
+  .opt-btn:disabled { cursor: default; }
+
+  .explanation {
+    margin-top: 1.25rem;
+    background: #fffbea;
+    border: 1px solid #e8d49a;
+    border-radius: 7px;
+    padding: 1rem 1.1rem;
+    font-size: .87rem;
+    line-height: 1.6;
+    color: #5a4a00;
+    display: none;
+  }
+  .explanation.show { display: block; animation: fadeIn .3s ease; }
+  .explanation strong { color: #3a2e00; }
+
+  .q-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+  }
+  .btn-nav {
+    background: var(--ink);
+    border: none;
+    color: var(--paper);
+    font-family: 'DM Sans', sans-serif;
+    font-size: .88rem;
+    font-weight: 600;
+    padding: .65rem 1.4rem;
+    border-radius: 5px;
+    cursor: pointer;
+    letter-spacing: .03em;
+    transition: all .2s;
+  }
+  .btn-nav:hover { opacity: .85; }
+  .btn-nav:disabled { opacity: .3; cursor: default; }
+  .btn-nav.primary { background: var(--gold); color: var(--ink); }
+  .btn-nav.primary:hover { background: #b8933e; opacity: 1; }
+
+  /* ─── RESULT ──────────────────────────── */
+  .result-card {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 2.5rem;
+    text-align: center;
+    box-shadow: 0 4px 24px rgba(0,0,0,.07);
+  }
+  .result-score {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--blue);
+    margin: .5rem 0;
+  }
+  .result-score.excellent { color: var(--green); }
+  .result-score.good { color: var(--gold); }
+  .result-score.poor { color: var(--red); }
+  .result-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: .4rem;
+  }
+  .result-sub {
+    color: var(--muted);
+    font-size: .88rem;
+    margin-bottom: 2rem;
+  }
+  .result-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 1.5rem 0 2rem;
+    padding: 1.25rem;
+    background: var(--cream);
+    border-radius: 8px;
+  }
+  .result-stat strong { display: block; font-size: 1.5rem; font-family: 'Playfair Display', serif; }
+  .result-stat.c strong { color: var(--green); }
+  .result-stat.w strong { color: var(--red); }
+  .result-stat.t strong { color: var(--blue); }
+  .result-stat span { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+
+  .result-review {
+    margin-top: 1.5rem;
+    text-align: left;
+  }
+  .result-review h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: .75rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  .review-item {
+    display: flex;
+    gap: .75rem;
+    padding: .75rem 1rem;
+    border-radius: 6px;
+    margin-bottom: .5rem;
+    font-size: .85rem;
+    line-height: 1.5;
+    border: 1px solid var(--border);
+  }
+  .review-item.correct { background: #e8f5ee; border-color: #a8d5b8; }
+  .review-item.wrong { background: #fde8e8; border-color: #f0b0b0; }
+  .review-icon { font-size: 1rem; flex-shrink: 0; }
+
+  .btn-retry {
+    margin-top: 1.5rem;
+    background: var(--blue);
+    border: none;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .95rem;
+    font-weight: 600;
+    padding: .75rem 2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    letter-spacing: .03em;
+    transition: all .2s;
+    margin-right: .75rem;
+  }
+  .btn-retry:hover { background: #142c48; }
+
+  /* ─── MOBILE ──────────────────────────── */
+  @media (max-width: 600px) {
+    .hero-stats { gap: 1.5rem; }
+    .hero-stat strong { font-size: 1.5rem; }
+    nav { padding: 0 1rem; }
+    .nav-logo { font-size: .9rem; }
+    .nav-tabs button { font-size: .75rem; padding: .35rem .6rem; }
+    .result-stats { gap: 1rem; }
+  }
+
+  /* ─── HIDE RESULT/QUIZ STATES ─────────── */
+  .quiz-active { display: none; }
+  .quiz-result { display: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Sejarah <span>Tryout 2</span></div>
+  <ul class="nav-tabs">
+    <li><button onclick="showPage('home')" class="active" id="tab-home">Beranda</button></li>
+    <li><button onclick="showPage('materi')" id="tab-materi">📖 Materi</button></li>
+    <li><button onclick="showPage('quiz')" id="tab-quiz">✏️ Latihan Soal</button></li>
+  </ul>
+</nav>
+
+<!-- ═══ HOME ═══════════════════════════════════════════════════════ -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-badge">SMK KELAS 12 · KURIKULUM MERDEKA · 2025–2026</div>
+    <h1>Belajar <em>Sejarah</em><br>Tryout 2</h1>
+    <p>Materi lengkap + latihan soal interaktif · Sejarah A & B</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><strong>100</strong><span>Total Soal</span></div>
+      <div class="hero-stat"><strong>8</strong><span>Topik Materi</span></div>
+      <div class="hero-stat"><strong>A + B</strong><span>Paket Soal</span></div>
+    </div>
+  </div>
+
+  <div style="max-width:720px;margin:3rem auto;padding:0 1.5rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.25rem;">
+    <div onclick="showPage('materi');showTopic('asal')" style="background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:1.4rem;cursor:pointer;transition:all .2s;" onmouseover="this.style.borderColor='#c9a84c'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-size:1.6rem;margin-bottom:.5rem;">🧬</div>
+      <div style="font-weight:600;font-size:.95rem;margin-bottom:.3rem;">Asal-Usul Nenek Moyang</div>
+      <div style="font-size:.8rem;color:var(--muted);">Soal 1–15 (Sejarah A)</div>
+    </div>
+    <div onclick="showPage('materi');showTopic('rempah')" style="background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:1.4rem;cursor:pointer;transition:all .2s;" onmouseover="this.style.borderColor='#c9a84c'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-size:1.6rem;margin-bottom:.5rem;">🌿</div>
+      <div style="font-weight:600;font-size:.95rem;margin-bottom:.3rem;">Jalur Rempah</div>
+      <div style="font-size:.8rem;color:var(--muted);">Soal 16–25 (Sejarah A)</div>
+    </div>
+    <div onclick="showPage('materi');showTopic('kolonial')" style="background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:1.4rem;cursor:pointer;transition:all .2s;" onmouseover="this.style.borderColor='#c9a84c'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-size:1.6rem;margin-bottom:.5rem;">⚓</div>
+      <div style="font-weight:600;font-size:.95rem;margin-bottom:.3rem;">Kolonialisme Barat</div>
+      <div style="font-size:.8rem;color:var(--muted);">Soal 26–40 (A) · 30–40 (B)</div>
+    </div>
+    <div onclick="showPage('materi');showTopic('jepang')" style="background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:1.4rem;cursor:pointer;transition:all .2s;" onmouseover="this.style.borderColor='#c9a84c'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-size:1.6rem;margin-bottom:.5rem;">🏴</div>
+      <div style="font-weight:600;font-size:.95rem;margin-bottom:.3rem;">Pendudukan Jepang</div>
+      <div style="font-size:.8rem;color:var(--muted);">Soal 41–50 (A & B)</div>
+    </div>
+    <div onclick="showPage('materi');showTopic('prasejarah')" style="background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:1.4rem;cursor:pointer;transition:all .2s;" onmouseover="this.style.borderColor='#c9a84c'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-size:1.6rem;margin-bottom:.5rem;">🪨</div>
+      <div style="font-weight:600;font-size:.95rem;margin-bottom:.3rem;">Prasejarah & Hindu-Buddha</div>
+      <div style="font-size:.8rem;color:var(--muted);">Soal 1–10 (Sejarah B)</div>
+    </div>
+    <div onclick="showPage('materi');showTopic('islam')" style="background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:1.4rem;cursor:pointer;transition:all .2s;" onmouseover="this.style.borderColor='#c9a84c'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-size:1.6rem;margin-bottom:.5rem;">☪️</div>
+      <div style="font-weight:600;font-size:.95rem;margin-bottom:.3rem;">Islam & Pergerakan Nasional</div>
+      <div style="font-size:.8rem;color:var(--muted);">Soal 11–35 (Sejarah B)</div>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding-bottom:3rem;">
+    <button onclick="showPage('quiz')" class="btn-start" style="width:auto;padding:.85rem 2.5rem;font-size:1rem;">
+      ✏️ Mulai Latihan Soal →
+    </button>
+  </div>
+</div>
+
+<!-- ═══ MATERI ══════════════════════════════════════════════════════ -->
+<div id="page-materi" class="page">
+  <div class="materi-wrap">
+    <div class="topic-selector">
+      <button class="topic-btn active" onclick="showTopic('asal')" id="tbtn-asal">🧬 Asal-Usul</button>
+      <button class="topic-btn" onclick="showTopic('rempah')" id="tbtn-rempah">🌿 Jalur Rempah</button>
+      <button class="topic-btn" onclick="showTopic('kolonial')" id="tbtn-kolonial">⚓ Kolonialisme</button>
+      <button class="topic-btn" onclick="showTopic('jepang')" id="tbtn-jepang">🏴 Jepang</button>
+      <button class="topic-btn" onclick="showTopic('prasejarah')" id="tbtn-prasejarah">🪨 Prasejarah</button>
+      <button class="topic-btn" onclick="showTopic('islam')" id="tbtn-islam">☪️ Islam & Nasional</button>
+    </div>
+
+    <!-- ASAL-USUL -->
+    <div class="topic-panel active" id="tp-asal">
+      <div class="section-title">Teori Asal-Usul Nenek Moyang Bangsa Indonesia</div>
+      <div class="section-sub">Sejarah A · Soal 1–15</div>
+
+      <div class="subsection">
+        <h3>Empat Teori Utama Asal-Usul</h3>
+        <table class="m-table">
+          <tr><th>Teori</th><th>Tokoh Pendukung</th><th>Isi Pokok</th></tr>
+          <tr><td><strong>Out of Africa</strong></td><td>Charles Darwin, Max Ingman</td><td>Manusia modern berasal dari <strong>Afrika Timur</strong> dan bermigrasi ke seluruh dunia ±60.000–70.000 tahun lalu.</td></tr>
+          <tr><td><strong>Out of Yunnan</strong></td><td>R.H. Geldern, J.H.C. Kern</td><td>Berasal dari <strong>Yunnan, Tiongkok Selatan</strong>. Bukti: kapak lonjong & persegi tersebar dari Asia ke Nusantara.</td></tr>
+          <tr><td><strong>Out of Taiwan</strong></td><td>Harry Oppenheimer, Peter Bellwood</td><td>Berasal dari <strong>Taiwan (Formosa)</strong>. Induk bahasa suku-suku Indonesia: <strong>Bahasa Austronesia</strong>.</td></tr>
+          <tr><td><strong>Teori Nusantara</strong></td><td>J. Crawford, K. Himly, Moh. Yamin</td><td>Nenek moyang Indonesia berasal dari <strong>Nusantara sendiri</strong>. Evolusi terjadi di dalam wilayah Nusantara.</td></tr>
+        </table>
+      </div>
+
+      <div class="subsection">
+        <h3>Teori Masuknya Hindu-Buddha</h3>
+        <table class="m-table">
+          <tr><th>Teori</th><th>Tokoh</th><th>Isi & Kelemahan</th></tr>
+          <tr><td><strong>Teori Kesatria</strong></td><td>F.D.K. Bosch</td><td>Dibawa kaum ksatria/prajurit India. <strong>Kelemahan:</strong> tidak ada bukti penaklukan militer India; ksatria tidak menguasai bahasa Sansekerta.</td></tr>
+          <tr><td><strong>Teori Waisya</strong></td><td>N.J. Krom</td><td>Dibawa pedagang India (kasta waisya) yang menetap dan menikah dengan penduduk lokal.</td></tr>
+          <tr><td><strong>Teori Brahmana</strong></td><td>J.C. van Leur</td><td>Dibawa kaum Brahmana. Bukti: prasasti berbahasa Sansekerta — hanya Brahmana yang menguasainya.</td></tr>
+          <tr><td><strong>Teori Arus Balik</strong></td><td>F.D.K. Bosch</td><td>Orang Nusantara sendiri pergi ke India belajar, lalu kembali menyebarkan Hindu-Buddha.</td></tr>
+        </table>
+      </div>
+
+      <div class="subsection">
+        <h3>Manusia Purba di Indonesia</h3>
+        <table class="m-table">
+          <tr><th>Fosil</th><th>Lokasi Penemuan</th><th>Penemu</th></tr>
+          <tr><td><strong>Meganthropus Paleojavanicus</strong></td><td>Sangiran, Sragen, Jawa Tengah</td><td>von Koenigswald (1941–42)</td></tr>
+          <tr><td><strong>Pithecanthropus Erectus</strong></td><td>Trinil, Ngawi, Jawa Timur</td><td>Eugene Dubois (1891)</td></tr>
+          <tr><td><strong>Homo Wajakensis</strong></td><td>Wajak, Tulungagung, Jatim</td><td>B.D. van Rietschoten (1889)</td></tr>
+          <tr><td><strong>Homo Soloensis</strong></td><td>Ngandong, Bengawan Solo</td><td>ter Haar & Oppenoorth (1931)</td></tr>
+        </table>
+        <div class="highlight-box">Yang <strong>BUKAN</strong> manusia purba Indonesia: <strong>Homo Neanderthalensis</strong> (ditemukan di Eropa, bukan Indonesia).</div>
+      </div>
+
+      <div class="subsection">
+        <h3>Zaman Prasejarah</h3>
+        <ul class="poin-list">
+          <li><strong>Lithos</strong> = batu (asal kata Paleolitikum, Mesolitikum, Neolitikum)</li>
+          <li>Mesolitikum — pembagian kerja: <strong>laki-laki berburu & ikan, perempuan meramu & jaga anak</strong></li>
+          <li>Neolitikum — manusia pertama kali mengenal <strong>bercocok tanam</strong></li>
+          <li>Ras Mongoloid (Proto-Melayu) masuk Nusantara: <strong>2500 SM</strong></li>
+          <li>Budaya lain dari Taiwan selain maritim: <strong>budaya bercocok tanam</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- REMPAH -->
+    <div class="topic-panel" id="tp-rempah">
+      <div class="section-title">Jalur Rempah dan Perdagangan Kuno</div>
+      <div class="section-sub">Sejarah A · Soal 16–25</div>
+
+      <div class="subsection">
+        <h3>Fakta Kunci</h3>
+        <ul class="poin-list">
+          <li>Warisan nenek moyang sejak <strong>4.500 tahun lalu</strong>: tradisi berlayar / <strong>budaya maritim</strong></li>
+          <li>Jaringan niaga rempah penghubung Barat–Timur: <strong>Spice Route (Jalur Rempah)</strong></li>
+          <li>Nama lain menurut A.G. Frank: <strong>Orient Trade / Silk Road of the Sea</strong></li>
+          <li>Dua jalur: <strong>Jalur Darat</strong> (Asia Tengah) & <strong>Jalur Laut</strong> (Samudra Hindia)</li>
+          <li>Komoditas primadona: <strong>rempah-rempah</strong> (cengkeh & pala dari Maluku)</li>
+          <li>Rempah masuk ke Tiongkok: sekitar <strong>abad ke-4–5 SM</strong></li>
+        </ul>
+      </div>
+
+      <div class="subsection">
+        <h3>Rempah Utama vs Bukan Utama</h3>
+        <table class="m-table">
+          <tr><th>✅ Rempah Utama Jalur Rempah</th><th>❌ Bukan Rempah Utama</th></tr>
+          <tr><td>Cengkeh (Maluku)</td><td>Teh</td></tr>
+          <tr><td>Pala (Banda, Maluku)</td><td>Kopi</td></tr>
+          <tr><td>Lada/Merica</td><td>Tembakau</td></tr>
+          <tr><td>Kayu Manis</td><td>Kapas</td></tr>
+        </table>
+      </div>
+
+      <div class="subsection">
+        <h3>Kerajaan & Wilayah</h3>
+        <ul class="poin-list">
+          <li>Sriwijaya sebagai kerajaan maritim: <strong>abad ke-7 sampai abad ke-13 M</strong></li>
+          <li>Wilayah Campa (kerajaan kuno) = negara modern: <strong>Vietnam</strong> (Vietnam Selatan)</li>
+          <li>Ras masuk 2500 SM: <strong>Ras Mongoloid / Proto-Melayu</strong></li>
+          <li>Bukti arkeologis jalur rempah praaksara: situs <strong>Uattamdi, Pulau Kayoa, Maluku Utara</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- KOLONIALISME -->
+    <div class="topic-panel" id="tp-kolonial">
+      <div class="section-title">Kolonialisme dan Imperialisme Barat</div>
+      <div class="section-sub">Sejarah A Soal 26–40 · Sejarah B Soal 30–40</div>
+
+      <div class="subsection">
+        <h3>Latar Belakang & Faktor Pendorong</h3>
+        <ul class="poin-list">
+          <li>Faktor utama: jatuhnya <strong>Konstantinopel (1453)</strong> ke Ottoman → jalur perdagangan Eropa–Asia terputus</li>
+          <li>Kota pusat perdagangan barang berharga dari Timur: <strong>Konstantinopel</strong> (kini Istanbul)</li>
+          <li>Pedagang perantara Barat–Timur: <strong>pedagang Arab (Middleman)</strong></li>
+          <li>Barang di Konstantinopel: rempah, sutra, permata, emas, porselen</li>
+          <li>Tujuan: berdagang langsung tanpa perantara → untung maksimal</li>
+        </ul>
+      </div>
+
+      <div class="subsection">
+        <h3>Ekspedisi Portugis — Kronologi</h3>
+        <table class="m-table">
+          <tr><th>Peristiwa</th><th>Tahun</th><th>Keterangan</th></tr>
+          <tr><td>Portugis mulai ekspedisi ke Timur</td><td><strong>Abad ke-15</strong></td><td>Diprakarsai Pangeran Henry the Navigator</td></tr>
+          <tr><td>Penemuan Tanjung Harapan</td><td><strong>1488</strong></td><td><strong>Bartolomeu Dias</strong>, Afrika Selatan</td></tr>
+          <tr><td>Berlabuh di India pertama kali</td><td><strong>1498</strong></td><td><strong>Vasco da Gama</strong> di Calicut, India</td></tr>
+          <tr><td>Tiba di Nusantara (Maluku)</td><td><strong>1511–1513</strong></td><td>Alfonso de Albuquerque</td></tr>
+        </table>
+      </div>
+
+      <div class="subsection">
+        <h3>Sistem Ekonomi Merkantilisme</h3>
+        <ul class="poin-list">
+          <li>Definisi: kemakmuran negara diukur dari <strong>jumlah emas dan perak</strong> yang dimiliki</li>
+          <li>Tujuan: perbesar modal dengan <strong>ekspor maksimal & cegah impor</strong></li>
+          <li>Periode perkembangan: <strong>abad ke-16 sampai abad ke-18</strong></li>
+          <li>Penganut: Inggris, Prancis, Portugis, Spanyol, Belanda</li>
+          <li>Yang <strong>BUKAN</strong> penganut: <strong>Tiongkok</strong> (negara Asia)</li>
+        </ul>
+        <div class="highlight-box"><strong>Ingat!</strong> Merkantilisme = ekspor sebanyak-banyaknya + cegah impor = perbesar cadangan emas/perak negara.</div>
+      </div>
+
+      <div class="subsection">
+        <h3>Semangat 3G & Gospel</h3>
+        <ul class="poin-list">
+          <li>3G: <strong>Gold</strong> (kekayaan), <strong>Glory</strong> (kejayaan), <strong>Gospel</strong> (penyebaran agama)</li>
+          <li>Agama yang melandasi gospel Portugis & Spanyol: <strong>Kristen Katolik</strong></li>
+          <li>Pemimpin gereja Katolik seluruh dunia: <strong>Paus (Pope)</strong>, berkedudukan di Vatikan</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- JEPANG -->
+    <div class="topic-panel" id="tp-jepang">
+      <div class="section-title">Pendudukan Jepang di Indonesia (1942)</div>
+      <div class="section-sub">Sejarah A Soal 41–50 · Sejarah B Soal 41–50</div>
+
+      <div class="subsection">
+        <h3>Kronologi Serangan & Pendaratan</h3>
+        <table class="m-table">
+          <tr><th>Peristiwa</th><th>Tanggal</th></tr>
+          <tr><td>Serangan Jepang terhadap Hindia-Belanda dimulai</td><td><strong>11 Januari 1942</strong></td></tr>
+          <tr><td>Pendaratan pertama Jepang di Indonesia</td><td><strong>Tarakan, Kaltim (11 Jan 1942)</strong></td></tr>
+          <tr><td>Jepang menduduki Palembang</td><td><strong>14–16 Februari 1942</strong></td></tr>
+          <tr><td>Pendaratan pertama Jepang di Pulau Jawa</td><td><strong>1 Maret 1942</strong> (Teluk Banten)</td></tr>
+          <tr><td>Serangan Jepang terhadap Batavia</td><td><strong>5 Maret 1942</strong></td></tr>
+          <tr><td>Serangan Jepang terhadap Bandung</td><td><strong>8 Maret 1942</strong></td></tr>
+          <tr><td>Belanda menyerah tanpa syarat</td><td><strong>8 Maret 1942</strong> di Kalijati, Subang, <strong>Jawa Barat</strong></td></tr>
+        </table>
+      </div>
+
+      <div class="subsection">
+        <h3>Urutan Pendaratan di Pulau Jawa</h3>
+        <div class="highlight-box" style="font-size:.92rem;">
+          <strong>Teluk Banten</strong> (Banten) → <strong>Eretan Wetan</strong> (Indramayu, Jabar) → <strong>Kragan</strong> (Rembang, Jateng)
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3>Fakta Penting Lainnya</h3>
+        <ul class="poin-list">
+          <li>Alasan Jepang rebut Palembang: <strong>ladang minyak bumi</strong> (vital untuk perang)</li>
+          <li>Daerah diduduki Februari 1942: Tarakan, Balikpapan, Pontianak, Palembang, Ambon</li>
+          <li>Yang BUKAN diduduki Februari 1942: <strong>Batavia/Jakarta</strong> (baru Maret)</li>
+          <li>Tempat penyerahan Belanda: <strong>Kalijati, Subang, Jawa Barat</strong></li>
+          <li>Yang BUKAN alasan optimisme Jepang dukung kemerdekaan: ketulusan (Jepang ada kepentingan perang)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- PRASEJARAH B -->
+    <div class="topic-panel" id="tp-prasejarah">
+      <div class="section-title">Prasejarah & Agama Hindu-Buddha</div>
+      <div class="section-sub">Sejarah B · Soal 1–10</div>
+
+      <div class="subsection">
+        <h3>Zaman-Zaman Prasejarah</h3>
+        <table class="m-table">
+          <tr><th>Zaman</th><th>Ciri Khas</th><th>Poin Penting</th></tr>
+          <tr><td><strong>Paleolitikum</strong></td><td>Nomaden, berburu-meramu</td><td>Manusia purba pertama menggunakan api</td></tr>
+          <tr><td><strong>Mesolitikum</strong></td><td>Semi-nomaden, seni gua</td><td>Pertama kali mengenal <strong>tradisi melukis</strong> (seni cadas)</td></tr>
+          <tr><td><strong>Neolitikum</strong></td><td>Menetap, pertanian</td><td>Pertama kali bercocok tanam; alat batu halus</td></tr>
+          <tr><td><strong>Megalitikum</strong></td><td>Batu besar</td><td>Menhir, dolmen, sarkofagus</td></tr>
+          <tr><td><strong>Zaman Logam</strong></td><td>Pengolahan logam</td><td>Perunggu, besi</td></tr>
+        </table>
+      </div>
+
+      <div class="subsection">
+        <h3>Hindu & Buddha — Fakta Kunci</h3>
+        <ul class="poin-list">
+          <li>Kitab suci Hindu: <strong>Weda</strong> (Rigweda, Samaweda, Yajurweda, Atharwaweda)</li>
+          <li>Dewa tertinggi zaman Weda (penguasa alam semesta): <strong>Brahma</strong></li>
+          <li>Zaman Upanisad berlangsung: <strong>600–300 SM</strong></li>
+          <li>Pendiri Buddha: <strong>Siddharta Gautama</strong>, keluar istana usia <strong>29 tahun</strong></li>
+          <li>Pencerahan di bawah pohon Bodhi di Bodh Gaya</li>
+          <li>Kitab suci Buddha: <strong>Tripitaka</strong></li>
+          <li>Hindu masuk Nusantara: abad ke-2 M; Buddha masuk: abad ke-4 M</li>
+        </ul>
+      </div>
+
+      <div class="subsection">
+        <h3>Fosil Manusia Purba Indonesia</h3>
+        <table class="m-table">
+          <tr><th>Fosil</th><th>Lokasi</th><th>Penemu</th></tr>
+          <tr><td>Homo Wajakensis</td><td>Wajak, Tulungagung</td><td>B.D. van Rietschoten (1889)</td></tr>
+          <tr><td>Pithecanthropus Erectus</td><td>Trinil, Ngawi</td><td>Eugene Dubois (1891)</td></tr>
+          <tr><td>Meganthropus Paleojavanicus</td><td>Sangiran, Sragen</td><td>von Koenigswald</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- ISLAM B -->
+    <div class="topic-panel" id="tp-islam">
+      <div class="section-title">Islam & Pergerakan Nasional</div>
+      <div class="section-sub">Sejarah B · Soal 11–35</div>
+
+      <div class="subsection">
+        <h3>Masuknya Islam ke Nusantara</h3>
+        <table class="m-table">
+          <tr><th>Teori</th><th>Tokoh</th><th>Abad</th><th>Bukti</th></tr>
+          <tr><td><strong>Gujarat</strong></td><td>Snouck Hurgronje, Pijnappel</td><td>ke-13</td><td>Batu nisan Sultan Malik as-Saleh mirip batu nisan Gujarat</td></tr>
+          <tr><td><strong>Mekkah</strong></td><td>Buya Hamka, van Leur</td><td>ke-7</td><td>Berita Arab, pedagang Arab langsung ke Nusantara</td></tr>
+          <tr><td><strong>Persia</strong></td><td>Husein Djajadiningrat</td><td>ke-13</td><td>Upacara Tabot (peringatan wafatnya Husain bin Ali)</td></tr>
+          <tr><td><strong>Arab</strong></td><td>T.W. Arnold</td><td>ke-7–8</td><td>Pedagang Arab bawa Islam langsung</td></tr>
+        </table>
+        <ul class="poin-list" style="margin-top:.8rem;">
+          <li>Metode penyebaran paling utama: <strong>perdagangan</strong></li>
+          <li>Daya tarik Islam bagi masyarakat kecil: <strong>tidak mengenal sistem kasta</strong></li>
+          <li>Penyebaran berjalan damai: <strong>disesuaikan budaya lokal, tidak dipaksakan</strong></li>
+        </ul>
+      </div>
+
+      <div class="subsection">
+        <h3>Organisasi Pergerakan Nasional</h3>
+        <table class="m-table">
+          <tr><th>Organisasi</th><th>Tahun</th><th>Pendiri/Tokoh</th><th>Keterangan</th></tr>
+          <tr><td><strong>Budi Utomo</strong></td><td>1908</td><td>Dr. Wahidin Sudirohusodo & Soetomo</td><td>Organisasi modern pertama; 20 Mei = Hari Kebangkitan Nasional</td></tr>
+          <tr><td><strong>Serikat Islam</strong></td><td>1912</td><td>Haji Samanhudi (SDI 1905) → H.O.S. Tjokroaminoto</td><td>Awalnya SDI (1905); mundur 1921 akibat perpecahan</td></tr>
+          <tr><td><strong>Muhammadiyah</strong></td><td>1912</td><td>K.H. Ahmad Dahlan</td><td>Islam modernis, fokus pendidikan & sosial</td></tr>
+        </table>
+      </div>
+
+      <div class="subsection">
+        <h3>Perlawanan vs Kolonialisme</h3>
+        <table class="m-table">
+          <tr><th>Aspek</th><th>Sebelum 1908</th><th>Setelah 1908</th></tr>
+          <tr><td>Sifat</td><td>Kedaerahan/lokal</td><td>Nasional</td></tr>
+          <tr><td>Cara</td><td>Fisik/senjata</td><td>Diplomasi, pers, pendidikan</td></tr>
+          <tr><td>Kepemimpinan</td><td>Tokoh adat/bangsawan/ulama</td><td>Organisasi modern</td></tr>
+          <tr><td>Kelemahan</td><td>Mudah dipecah belah (devide et impera)</td><td>Lebih terorganisasi</td></tr>
+        </table>
+      </div>
+
+      <div class="subsection">
+        <h3>Faktor Pendorong Pergerakan Nasional</h3>
+        <ul class="poin-list">
+          <li><strong>Internal:</strong> kenangan kejayaan masa lalu, penderitaan rakyat, munculnya golongan terpelajar</li>
+          <li><strong>Eksternal:</strong> kemenangan Jepang atas Rusia (1905), kebangkitan nasionalisme Asia, masuknya paham liberalisme & sosialisme</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ QUIZ ═════════════════════════════════════════════════════════ -->
+<div id="page-quiz" class="page">
+  <div class="quiz-wrap">
+
+    <!-- Config -->
+    <div id="quiz-config">
+      <div class="quiz-config">
+        <h2>Latihan Soal Interaktif</h2>
+        <p>Pilih paket soal dan jumlah soal yang ingin kamu kerjakan.</p>
+
+        <div class="config-group">
+          <label>Paket Soal</label>
+          <div class="config-options">
+            <button class="config-opt selected" onclick="selectConfig('paket','A')" id="cfg-paket-A">📘 Sejarah A</button>
+            <button class="config-opt" onclick="selectConfig('paket','B')" id="cfg-paket-B">📗 Sejarah B</button>
+            <button class="config-opt" onclick="selectConfig('paket','AB')" id="cfg-paket-AB">📚 Campuran A+B</button>
+          </div>
+        </div>
+
+        <div class="config-group">
+          <label>Jumlah Soal</label>
+          <div class="config-options">
+            <button class="config-opt" onclick="selectConfig('jumlah',10)" id="cfg-jumlah-10">10 Soal</button>
+            <button class="config-opt selected" onclick="selectConfig('jumlah',20)" id="cfg-jumlah-20">20 Soal</button>
+            <button class="config-opt" onclick="selectConfig('jumlah',50)" id="cfg-jumlah-50">50 Soal</button>
+          </div>
+        </div>
+
+        <div class="config-group">
+          <label>Mode Jawaban</label>
+          <div class="config-options">
+            <button class="config-opt selected" onclick="selectConfig('mode','instant')" id="cfg-mode-instant">⚡ Langsung (lihat benar/salah)</button>
+            <button class="config-opt" onclick="selectConfig('mode','end')" id="cfg-mode-end">📋 Di akhir (ujian)</button>
+          </div>
+        </div>
+
+        <button class="btn-start" onclick="startQuiz()">Mulai Latihan →</button>
+      </div>
+    </div>
+
+    <!-- Active Quiz -->
+    <div id="quiz-active" class="quiz-active">
+      <div class="quiz-header">
+        <div class="quiz-progress-text">
+          Soal <strong id="q-current">1</strong> dari <span id="q-total">20</span>
+        </div>
+        <div class="quiz-timer" id="quiz-timer">00:00</div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+      <div class="q-card" id="q-card">
+        <!-- injected by JS -->
+      </div>
+      <div class="q-actions">
+        <button class="btn-nav" id="btn-prev" onclick="prevQ()" disabled>← Sebelumnya</button>
+        <button class="btn-nav primary" id="btn-next" onclick="nextQ()">Selanjutnya →</button>
+      </div>
+    </div>
+
+    <!-- Result -->
+    <div id="quiz-result" class="quiz-result">
+      <!-- injected by JS -->
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// DATA SOAL
+// ═══════════════════════════════════════════════════════════════════
+const SOAL_A = [
+  { topik:"Asal-Usul", q:"Menurut Teori Out of Africa, nenek moyang manusia modern pertama kali berasal dari...", opts:["Yunnan, Tiongkok Selatan","Afrika Timur","Taiwan (Formosa)","Nusantara/Indonesia","India Selatan"], ans:1, expl:"Teori Out of Africa (Charles Darwin, Max Ingman): manusia modern berasal dari Afrika Timur, bermigrasi ke seluruh dunia ±60.000–70.000 tahun lalu." },
+  { topik:"Asal-Usul", q:"Kelemahan utama Teori Kesatria dalam proses masuknya Hindu-Buddha ke Indonesia adalah...", opts:["Tidak ada pedagang India yang datang ke Nusantara","Kaum Brahmana tidak bisa pergi keluar India","Tidak ada bukti penaklukan militer India; ksatria tidak menguasai bahasa Sansekerta","Tidak ada kerajaan Hindu di India pada masa itu","Kaum ksatria dilarang bepergian jauh"], ans:2, expl:"Teori Kesatria (F.D.K. Bosch): kelemahan utamanya adalah tidak ditemukan bukti penaklukan militer India di Nusantara, dan kaum ksatria tidak menguasai bahasa Sansekerta." },
+  { topik:"Asal-Usul", q:"Menurut Teori Out of Yunnan, nenek moyang bangsa Indonesia berasal dari...", opts:["Afrika","Taiwan","India","Yunnan, Tiongkok Selatan","Nusantara sendiri"], ans:3, expl:"Teori Out of Yunnan (R.H. Geldern, J.H.C. Kern): nenek moyang berasal dari Yunnan, Tiongkok Selatan. Bukti: kapak lonjong & persegi tersebar dari Asia ke Nusantara." },
+  { topik:"Asal-Usul", q:"Pada masa budaya Mesolitikum, pembagian kerja antara laki-laki dan perempuan adalah...", opts:["Laki-laki bertani, perempuan berburu","Laki-laki membuat gerabah, perempuan menenun","Laki-laki berburu & menangkap ikan, perempuan meramu tumbuhan & menjaga anak","Keduanya bersama-sama bercocok tanam","Laki-laki memimpin upacara, perempuan mencari air"], ans:2, expl:"Pada Mesolitikum, pembagian kerja: laki-laki berburu & menangkap ikan, perempuan meramu tumbuhan & menjaga anak di gua/tempat tinggal." },
+  { topik:"Asal-Usul", q:"Tokoh yang mengemukakan Teori Kesatria dalam masuknya Hindu-Buddha ke Indonesia adalah...", opts:["N.J. Krom","J.C. van Leur","F.D.K. Bosch","Harry Oppenheimer","R.H. Geldern"], ans:2, expl:"F.D.K. Bosch adalah tokoh yang mengemukakan Teori Kesatria (dan juga Teori Arus Balik)." },
+  { topik:"Asal-Usul", q:"Menurut Teori Nusantara, asal-usul nenek moyang bangsa Indonesia adalah...", opts:["Berasal dari Yunnan, Tiongkok","Berasal dari Taiwan","Berasal dari Afrika","Berasal dari wilayah Nusantara sendiri, bukan dari luar","Berasal dari India"], ans:3, expl:"Teori Nusantara (J. Crawford, K. Himly, Moh. Yamin, Gorys Keraf): nenek moyang Indonesia berasal dari Nusantara sendiri, evolusi terjadi di dalam wilayah Nusantara." },
+  { topik:"Asal-Usul", q:"Manakah yang BUKAN termasuk jenis manusia purba yang ditemukan di Indonesia?", opts:["Meganthropus Paleojavanicus","Pithecanthropus Erectus","Homo Wajakensis","Homo Neanderthalensis","Homo Soloensis"], ans:3, expl:"Homo Neanderthalensis ditemukan di Eropa (terutama Jerman & Prancis), bukan di Indonesia." },
+  { topik:"Asal-Usul", q:"Menurut Teori Nusantara, evolusi keturunan manusia purba terjadi di...", opts:["Afrika","India","Tiongkok","Wilayah Nusantara itu sendiri","Taiwan"], ans:3, expl:"Inti Teori Nusantara: evolusi nenek moyang terjadi di dalam wilayah Nusantara sendiri, tidak ada migrasi dari luar." },
+  { topik:"Asal-Usul", q:"Menurut Teori Out of Taiwan, nenek moyang bangsa Indonesia berasal dari...", opts:["Yunnan, Tiongkok Selatan","Afrika Timur","Taiwan (Formosa)","India Selatan","Nusantara"], ans:2, expl:"Teori Out of Taiwan (Harry Oppenheimer, Peter Bellwood): nenek moyang berasal dari Taiwan. Induk bahasa suku-suku Indonesia: bahasa Austronesia." },
+  { topik:"Asal-Usul", q:"Menurut analisis kebahasaan Teori Out of Taiwan, induk bahasa suku-suku Indonesia adalah...", opts:["Bahasa Melayu","Bahasa Austronesia","Bahasa Proto-Melayu","Bahasa Dravida","Bahasa Sino-Tibet"], ans:1, expl:"Teori Out of Taiwan menyatakan bahasa Austronesia purba berkembang di Taiwan, dan menjadi induk bahasa suku-suku Indonesia." },
+  { topik:"Asal-Usul", q:"Tokoh yang mengemukakan Teori Waisya dalam masuknya Hindu-Buddha ke Indonesia adalah...", opts:["F.D.K. Bosch","J.C. van Leur","N.J. Krom","R.H. Geldern","Harry Oppenheimer"], ans:2, expl:"N.J. Krom adalah tokoh pendukung Teori Waisya: Hindu-Buddha dibawa pedagang India (kasta waisya) yang menetap dan menikah dengan penduduk lokal." },
+  { topik:"Asal-Usul", q:"Selain budaya maritim, budaya lain yang dibawa nenek moyang dari Taiwan adalah...", opts:["Budaya membuat gerabah","Budaya bercocok tanam (pertanian)","Budaya membuat logam","Budaya membangun candi","Budaya beternak kerbau"], ans:1, expl:"Selain budaya maritim, nenek moyang dari Taiwan juga membawa budaya bercocok tanam/pertanian ke Nusantara." },
+  { topik:"Asal-Usul", q:"Arti kata 'lithos' dalam istilah Zaman Paleolitikum adalah...", opts:["Tua","Baru","Batu","Api","Manusia"], ans:2, expl:"'Lithos' berasal dari bahasa Yunani yang berarti BATU. 'Paleo' = tua. Jadi Paleolitikum = Zaman Batu Tua." },
+  { topik:"Asal-Usul", q:"Fosil Meganthropus Paleojavanicus ditemukan di...", opts:["Trinil, Ngawi, Jawa Timur","Wajak, Tulungagung, Jawa Timur","Ngandong, tepi Bengawan Solo","Sangiran, Sragen, Jawa Tengah","Mojokerto, Jawa Timur"], ans:3, expl:"Meganthropus Paleojavanicus ditemukan di Sangiran, Sragen, Jawa Tengah oleh von Koenigswald (1941–1942). Ini manusia purba terbesar di Jawa." },
+  { topik:"Asal-Usul", q:"Masa ketika manusia purba pertama kali mengenal cara bercocok tanam adalah...", opts:["Zaman Paleolitikum","Zaman Mesolitikum","Zaman Neolitikum","Zaman Megalitikum","Zaman Logam"], ans:2, expl:"Zaman Neolitikum: manusia pertama kali mengenal pertanian/bercocok tanam, mulai menetap, alat batu halus." },
+  { topik:"Jalur Rempah", q:"Warisan nenek moyang bangsa Indonesia yang sudah ada sejak 4.500 tahun lalu adalah...", opts:["Tradisi bertani padi","Tradisi berlayar/budaya maritim","Tradisi membuat batik","Tradisi berternak sapi","Tradisi membangun candi"], ans:1, expl:"Tradisi berlayar/budaya maritim adalah warisan yang sudah ada sejak 4.500 tahun lalu, jauh sebelum masuknya pengaruh asing." },
+  { topik:"Jalur Rempah", q:"Istilah jaringan niaga rempah yang menghubungkan belahan barat dan timur dunia adalah...", opts:["Silk Road","Gold Route","Spice Route (Jalur Rempah)","Orient Road","Cinnamon Route"], ans:2, expl:"Spice Route atau Jalur Rempah adalah istilah untuk jaringan perdagangan rempah yang menghubungkan Asia Timur, Asia Tenggara, Asia Selatan, Timur Tengah, Afrika Timur, dan Eropa." },
+  { topik:"Jalur Rempah", q:"Manakah yang BUKAN merupakan rempah utama yang diperdagangkan di jalur rempah?", opts:["Cengkeh","Pala","Lada/Merica","Teh","Kayu Manis"], ans:3, expl:"Teh bukan rempah utama jalur rempah kuno. Rempah utama adalah cengkeh, pala, lada, dan kayu manis yang berasal dari Nusantara & Asia Tenggara." },
+  { topik:"Jalur Rempah", q:"Dua jalur perdagangan rempah yang dikenal di dunia adalah...", opts:["Jalur Atlantik dan Jalur Mediterania","Jalur Darat (Asia Tengah) dan Jalur Laut (Samudra Hindia)","Jalur Eropa dan Jalur Afrika","Jalur Sutra Darat dan Jalur Emas","Jalur Arab dan Jalur India"], ans:1, expl:"Dua jalur utama: (1) Jalur Darat melalui Asia Tengah (Jalur Sutra), dan (2) Jalur Laut melalui Samudra Hindia." },
+  { topik:"Jalur Rempah", q:"Masa kekuasaan Kerajaan Sriwijaya sebagai kerajaan maritim berlangsung pada...", opts:["Abad ke-3 – 9 M","Abad ke-5 – 11 M","Abad ke-7 – 13 M","Abad ke-9 – 15 M","Abad ke-4 – 10 M"], ans:2, expl:"Sriwijaya berkuasa sebagai kerajaan maritim terbesar sejak abad ke-7 sampai abad ke-13 M, dengan puncak kekuasaan abad ke-7–9 M." },
+  { topik:"Jalur Rempah", q:"Negara modern yang mencakup wilayah Campa (kerajaan kuno) adalah...", opts:["Kamboja","Thailand","Myanmar","Vietnam","Laos"], ans:3, expl:"Kerajaan Campa terletak di wilayah yang kini menjadi Vietnam Selatan." },
+  { topik:"Jalur Rempah", q:"Ras nenek moyang bangsa Indonesia yang masuk ke Nusantara pada tahun 2500 SM adalah...", opts:["Ras Australoid","Ras Kaukasoid","Ras Mongoloid (Proto-Melayu)","Ras Negroid","Ras Melanesoid"], ans:2, expl:"Ras Mongoloid (Proto-Melayu) masuk ke Nusantara sekitar tahun 2500 SM, membawa budaya Neolitikum." },
+  { topik:"Jalur Rempah", q:"Rempah-rempah Nusantara masuk ke Tiongkok pada sekitar abad...", opts:["Abad ke-10 SM","Abad ke-7 SM","Abad ke-4–5 SM","Abad ke-2 M","Abad ke-1 M"], ans:2, expl:"Rempah Nusantara diperkirakan sudah dikenal di Tiongkok sekitar abad ke-4 sampai ke-5 SM." },
+  { topik:"Jalur Rempah", q:"Nama lain jalur rempah menurut sejarawan A.G. Frank adalah...", opts:["Silk Road","Cinnamon Route","Orient Trade / jalur sutra laut","Gold Route","Pepper Road"], ans:2, expl:"A.G. Frank menyebut jalur rempah dengan istilah 'Orient Trade' atau 'Silk Road of the Sea' (jalur sutra laut)." },
+  { topik:"Jalur Rempah", q:"Lokasi penemuan bukti arkeologis jalur rempah pada masa praaksara adalah...", opts:["Sangiran, Jawa Tengah","Pulau Banda dan situs Uattamdi, Pulau Kayoa, Maluku Utara","Bali dan Lombok","Sumatera Selatan","Pantai Utara Jawa"], ans:1, expl:"Bukti arkeologis jalur rempah masa praaksara ditemukan di Pulau Banda (Maluku) dan situs Uattamdi di Pulau Kayoa, Maluku Utara." },
+  { topik:"Kolonialisme", q:"Manakah yang merupakan faktor UTAMA latar belakang kolonialisme-imperialisme Barat?", opts:["Keinginan menyebarkan demokrasi","Jatuhnya Konstantinopel (1453) yang memutus jalur perdagangan Eropa–Asia","Perang antara negara-negara Eropa","Keinginan menyebarkan budaya Eropa","Pertumbuhan penduduk Eropa yang pesat"], ans:1, expl:"Jatuhnya Konstantinopel ke tangan Turki Usmani (1453) menutup jalur perdagangan Eropa–Asia, mendorong Eropa mencari jalur baru ke Asia." },
+  { topik:"Kolonialisme", q:"Pengertian 'prospek ekonomi dan keinginan berdagang langsung dengan dunia Timur' adalah...", opts:["Keinginan Eropa membangun industri di Asia","Keinginan menghindari pedagang perantara untuk mendapat keuntungan maksimal","Keinginan membeli barang murah dari Asia untuk dijual di Afrika","Keinginan membuat koloni pertanian di Asia","Keinginan memperoleh tenaga kerja murah dari Asia"], ans:1, expl:"Berdagang langsung dengan dunia Timur tanpa melalui pedagang perantara (Arab) bertujuan mengurangi biaya dan mendapat keuntungan maksimal." },
+  { topik:"Kolonialisme", q:"Kota yang menjadi pusat perdagangan barang-barang berharga dari dunia Timur sebelum 1453 adalah...", opts:["Roma","Lisbon","Konstantinopel (Istanbul)","Venesia","Barcelona"], ans:2, expl:"Konstantinopel (kini Istanbul, Turki) adalah pusat perdagangan internasional terbesar sebelum jatuh ke tangan Ottoman tahun 1453." },
+  { topik:"Kolonialisme", q:"Manakah yang BUKAN merupakan barang yang diperdagangkan di pusat kota Konstantinopel?", opts:["Rempah-rempah","Sutra","Permata","Tekstil kasar hasil industri Eropa","Emas dan porselen"], ans:3, expl:"Konstantinopel memperdagangkan barang-barang mewah dari Asia (rempah, sutra, permata, emas, porselen). Tekstil kasar Eropa bukan komoditas utama di sana." },
+  { topik:"Kolonialisme", q:"Istilah untuk pedagang perantara dalam perdagangan antara Barat dan Timur adalah...", opts:["Saudagar","Makelar","Middleman / pedagang Arab (perantara)","Rentenir","Bandar"], ans:2, expl:"Pedagang Arab berperan sebagai middleman (perantara) dalam perdagangan antara dunia Barat (Eropa) dan dunia Timur (Asia)." },
+  { topik:"Kolonialisme", q:"Portugis mulai melakukan ekspedisi ke dunia Timur pada abad ke...", opts:["Abad ke-13","Abad ke-14","Abad ke-15","Abad ke-16","Abad ke-17"], ans:2, expl:"Portugis mulai ekspedisi ke dunia Timur pada abad ke-15 (1400-an), diprakarsai oleh Pangeran Henry the Navigator." },
+  { topik:"Kolonialisme", q:"Penemu Tanjung Harapan di Afrika Selatan adalah...", opts:["Vasco da Gama","Christopher Columbus","Ferdinand Magellan","Bartolomeu Dias","Alfonso de Albuquerque"], ans:3, expl:"Bartolomeu Dias menemukan Tanjung Harapan (Cape of Good Hope) di Afrika Selatan pada tahun 1488, membuka jalur laut ke Asia." },
+  { topik:"Kolonialisme", q:"Tahun ketika Portugis pertama kali berlabuh di India adalah...", opts:["1485","1490","1492","1498","1511"], ans:3, expl:"Vasco da Gama berlabuh pertama kali di Calicut (Kozhikode), India pada tahun 1498, membuka jalur langsung Eropa–Asia." },
+  { topik:"Kolonialisme", q:"Pengertian teori ekonomi Merkantilisme adalah...", opts:["Sistem ekonomi yang mengutamakan pertanian","Sistem perdagangan bebas tanpa campur tangan negara","Teori yang menyatakan kemakmuran negara diukur dari jumlah emas dan perak yang dimiliki","Sistem yang mengutamakan industri dalam negeri","Teori yang mendorong negara untuk mengimpor sebanyak mungkin"], ans:2, expl:"Merkantilisme: sistem ekonomi yang menyatakan kemakmuran negara diukur dari jumlah emas dan perak yang dimiliki, diperoleh melalui surplus perdagangan." },
+  { topik:"Kolonialisme", q:"Sistem ekonomi yang bertujuan memperbesar modal melalui ekspor dan pencegahan impor adalah...", opts:["Liberalisme","Sosialisme","Kapitalisme","Merkantilisme","Feodalisme"], ans:3, expl:"Merkantilisme mendorong ekspor sebanyak-banyaknya dan mencegah impor, agar emas/perak mengalir masuk ke negara." },
+  { topik:"Kolonialisme", q:"Sistem ekonomi Merkantilisme berkembang pada abad...", opts:["Abad ke-13–15","Abad ke-14–16","Abad ke-16–18","Abad ke-17–19","Abad ke-18–20"], ans:2, expl:"Merkantilisme berkembang pesat dari abad ke-16 sampai abad ke-18 di Eropa Barat." },
+  { topik:"Kolonialisme", q:"Manakah yang BUKAN penganut sistem ekonomi Merkantilisme?", opts:["Inggris","Prancis","Portugis","Tiongkok (China)","Belanda"], ans:3, expl:"Tiongkok tidak menganut sistem Merkantilisme pada masa itu. Penganut utama Merkantilisme adalah negara-negara Eropa Barat." },
+  { topik:"Kolonialisme", q:"Komoditas primadona dalam perkembangan perdagangan yang mendorong kolonialisme adalah...", opts:["Tembakau dan kapas","Emas dan perak","Rempah-rempah (cengkeh dan pala)","Sutra dan kain","Beras dan gandum"], ans:2, expl:"Rempah-rempah, terutama cengkeh dan pala dari Maluku, adalah komoditas paling berharga yang mendorong bangsa Eropa datang ke Nusantara." },
+  { topik:"Kolonialisme", q:"Agama yang melandasi semangat gospel Portugis dan Spanyol dalam ekspedisi mereka adalah...", opts:["Islam","Kristen Protestan","Kristen Katolik","Hinduisme","Ortodoks"], ans:2, expl:"Gospel (Injil) adalah misi penyebaran agama Kristen Katolik. Portugis dan Spanyol, sebagai negara Katolik, menjadikan penyebaran Katolik sebagai salah satu tujuan ekspedisi (3G: Gold, Glory, Gospel)." },
+  { topik:"Kolonialisme", q:"Pemimpin gereja Katolik seluruh dunia yang berkedudukan di Vatikan adalah...", opts:["Uskup Agung","Kardinal","Patriark","Paus (Pope)","Monsinyur"], ans:3, expl:"Paus (Pope) adalah pemimpin tertinggi Gereja Katolik Roma, berkedudukan di Vatikan, Roma, Italia." },
+  { topik:"Pendudukan Jepang", q:"Tanggal serangan Jepang terhadap Hindia-Belanda dimulai adalah...", opts:["1 Januari 1942","8 Desember 1941","11 Januari 1942","1 Maret 1942","8 Maret 1942"], ans:2, expl:"Jepang memulai serangannya terhadap Hindia-Belanda pada 11 Januari 1942 dengan mendarat di Tarakan, Kalimantan Timur." },
+  { topik:"Pendudukan Jepang", q:"Lokasi pendaratan pertama Jepang di Indonesia adalah...", opts:["Palembang, Sumatera Selatan","Tarakan, Kalimantan Timur","Teluk Banten, Jawa Barat","Ambon, Maluku","Balikpapan, Kalimantan Timur"], ans:1, expl:"Jepang pertama kali mendarat di Tarakan, Kalimantan Timur pada 11 Januari 1942 karena Tarakan memiliki ladang minyak yang strategis." },
+  { topik:"Pendudukan Jepang", q:"Manakah yang BUKAN merupakan daerah yang diduduki Jepang pada Februari 1942?", opts:["Palembang","Balikpapan","Ambon","Batavia/Jakarta","Pontianak"], ans:3, expl:"Batavia/Jakarta baru diduduki Jepang pada awal Maret 1942 (setelah pendaratan di Jawa pada 1 Maret 1942). Pada Februari 1942, Jepang masih di Kalimantan, Sumatera, dan Maluku." },
+  { topik:"Pendudukan Jepang", q:"Alasan utama Jepang menduduki Palembang adalah...", opts:["Palembang adalah pusat pemerintahan Hindia-Belanda","Palembang memiliki pelabuhan terbesar di Sumatera","Palembang memiliki ladang minyak bumi yang penting untuk kepentingan perang","Palembang adalah kota dengan populasi terbesar","Palembang dekat dengan Selat Malaka"], ans:2, expl:"Palembang adalah salah satu pusat produksi minyak bumi terbesar di Hindia-Belanda. Jepang sangat membutuhkan minyak untuk menggerakkan mesin perangnya." },
+  { topik:"Pendudukan Jepang", q:"Lokasi pendaratan pertama Jepang di Pulau Jawa adalah...", opts:["Surabaya","Semarang","Teluk Banten (Banten)","Jakarta/Batavia","Cilacap"], ans:2, expl:"Jepang pertama kali mendarat di Pulau Jawa di Teluk Banten (Banten) pada 1 Maret 1942." },
+  { topik:"Pendudukan Jepang", q:"Lokasi pendaratan Jepang di Pulau Jawa secara berturut-turut adalah...", opts:["Surabaya → Semarang → Jakarta","Teluk Banten → Eretan Wetan → Kragan","Jakarta → Bandung → Surabaya","Kragan → Eretan Wetan → Teluk Banten","Cilacap → Purwokerto → Yogyakarta"], ans:1, expl:"Urutan pendaratan Jepang di Jawa: Teluk Banten (Banten) → Eretan Wetan (Indramayu, Jabar) → Kragan (Rembang, Jateng), semuanya pada 1 Maret 1942." },
+  { topik:"Pendudukan Jepang", q:"Tanggal serangan Jepang terhadap Batavia dan Bandung adalah...", opts:["1 Maret 1942","5–8 Maret 1942","11 Maret 1942","15 Maret 1942","20 Maret 1942"], ans:1, expl:"Jepang menyerang Batavia pada 5 Maret 1942 dan Bandung pada 8 Maret 1942." },
+  { topik:"Pendudukan Jepang", q:"Provinsi (tempat) di mana Belanda menyerah tanpa syarat kepada Jepang adalah...", opts:["DKI Jakarta","Jawa Timur","Jawa Tengah","Jawa Barat (Kalijati, Subang)","Banten"], ans:3, expl:"Belanda menyerah tanpa syarat kepada Jepang pada 8 Maret 1942 di Kalijati, Subang, Jawa Barat. Penyerahan ditandatangani oleh Gubernur Jenderal Tjarda van Starkenborgh Stachouwer." },
+  { topik:"Pendudukan Jepang", q:"Manakah yang BUKAN alasan optimisme Jepang dalam mendukung kemerdekaan Indonesia?", opts:["Jepang butuh dukungan rakyat Indonesia melawan Sekutu","Jepang membutuhkan tenaga manusia Indonesia","Jepang mengusung propaganda 'Asia untuk Asia'","Jepang tulus ingin memerdekakan Indonesia tanpa kepentingan strategis","Jepang ingin melemahkan semangat pro-Belanda di Indonesia"], ans:3, expl:"Jepang tidak tulus ingin memerdekakan Indonesia. Dukungan terhadap kemerdekaan Indonesia semata-mata demi kepentingan strategis perang Jepang melawan Sekutu." },
+  { topik:"Pendudukan Jepang", q:"Tanggal penyerahan tanpa syarat Belanda kepada Jepang adalah...", opts:["1 Maret 1942","5 Maret 1942","7 Maret 1942","8 Maret 1942","11 Maret 1942"], ans:3, expl:"Belanda menyerah tanpa syarat kepada Jepang pada 8 Maret 1942 di Kalijati, Subang, Jawa Barat." },
+];
+
+const SOAL_B = [
+  { topik:"Prasejarah", q:"Pada periode prasejarah manakah manusia purba pertama kali mengenal tradisi melukis?", opts:["Paleolitikum","Mesolitikum","Neolitikum","Megalitikum","Zaman Logam"], ans:1, expl:"Pada Zaman Mesolitikum, manusia purba mulai mengenal tradisi melukis di dinding gua (seni cadas/rock art). Contoh terkenal: lukisan di gua Sulawesi." },
+  { topik:"Prasejarah", q:"Di mana fosil Homo Wajakensis ditemukan pada tahun 1889?", opts:["Trinil, Ngawi","Sangiran, Sragen","Wajak, Tulungagung","Mojokerto","Kedung Brubus"], ans:2, expl:"Homo Wajakensis ditemukan di Wajak, Tulungagung, Jawa Timur oleh B.D. van Rietschoten pada tahun 1889." },
+  { topik:"Prasejarah", q:"Pada periode prasejarah manakah manusia purba pertama kali menemukan/menggunakan api?", opts:["Zaman Megalitikum","Zaman Neolitikum","Zaman Mesolitikum","Zaman Perunggu","Zaman Besi"], ans:2, expl:"Api pertama kali ditemukan/digunakan oleh manusia pada Zaman Mesolitikum (akhir Paleolitikum / awal Mesolitikum)." },
+  { topik:"Hindu-Buddha", q:"Dewa tertinggi yang dianggap sebagai penguasa alam semesta pada zaman Weda adalah...", opts:["Wisnu","Siwa","Indra","Brahma","Agni"], ans:3, expl:"Pada Zaman Weda, Brahma dianggap sebagai dewa tertinggi (pencipta). Bersama Wisnu dan Siwa, ketiganya membentuk Trimurti." },
+  { topik:"Hindu-Buddha", q:"Tokoh pendiri ajaran Buddha yang memperoleh pencerahan di bawah pohon Bodhi adalah...", opts:["Asoka","Ananda","Siddharta Gautama","Mahavira","Nagarjuna"], ans:2, expl:"Siddharta Gautama adalah pendiri ajaran Buddha, yang memperoleh pencerahan di bawah pohon Bodhi di Bodh Gaya, India." },
+  { topik:"Hindu-Buddha", q:"Kitab suci agama Buddha adalah...", opts:["Weda","Upanisad","Mahabharata","Tripitaka","Ramayana"], ans:3, expl:"Kitab suci agama Buddha adalah Tripitaka (atau Tipitaka dalam bahasa Pali), yang berisi ajaran-ajaran Buddha Gautama." },
+  { topik:"Hindu-Buddha", q:"Berapa usia Siddharta Gautama ketika menyelinap keluar dari istana untuk mencari pencerahan?", opts:["25 tahun","27 tahun","29 tahun","30 tahun","35 tahun"], ans:2, expl:"Siddharta Gautama meninggalkan istana pada usia 29 tahun untuk mencari kebenaran dan makna kehidupan." },
+  { topik:"Hindu-Buddha", q:"Rentang tahun berlangsungnya zaman Upanisad adalah...", opts:["800–600 SM","600–300 SM","300–100 SM","100 SM–100 M","1000–800 SM"], ans:1, expl:"Zaman Upanisad berlangsung sekitar 600–300 SM, mengembangkan filsafat Hinduisme lebih mendalam dari Weda." },
+  { topik:"Hindu-Buddha", q:"Agama dan kebudayaan Buddha masuk ke Nusantara dari India sekitar abad ke...", opts:["Abad ke-2 M","Abad ke-3 M","Abad ke-4 M","Abad ke-5 M","Abad ke-7 M"], ans:2, expl:"Agama Buddha diperkirakan masuk ke Nusantara dari India sekitar abad ke-4 Masehi." },
+  { topik:"Hindu-Buddha", q:"Agama dan kebudayaan Hindu masuk ke Nusantara dari India sekitar abad ke...", opts:["Abad ke-1 M","Abad ke-2 M","Abad ke-5 M","Abad ke-7 M","Abad ke-10 M"], ans:1, expl:"Hindu diperkirakan masuk ke Nusantara sekitar abad ke-2 M (ada sumber lain yang menyebut abad ke-4 M)." },
+  { topik:"Prasejarah", q:"Situs Here Sorot Entapa yang menyimpan bukti lukisan perahu dan penari terletak di...", opts:["Pulau Seram, Maluku","Pulau Flores, NTT","Pulau Moa, Maluku Barat Daya","Pulau Timor","Pulau Alor"], ans:2, expl:"Situs Here Sorot Entapa berada di Pulau Moa, Maluku Barat Daya, menyimpan lukisan perahu dan penari di dinding gua." },
+  { topik:"Prasejarah", q:"Komoditas barter yang dilakukan nenek moyang bangsa Indonesia dengan Vietnam adalah...", opts:["Emas dan perak","Rempah-rempah dan kain","Gerabah/tembikar dan perhiasan batu","Beras dan garam","Kayu dan bambu"], ans:2, expl:"Nenek moyang Indonesia melakukan barter dengan Vietnam melalui komoditas gerabah/tembikar dan perhiasan batu." },
+  { topik:"Islam", q:"Perkembangan pesat pengaruh Islam dari Timur Tengah di Nusantara terjadi pada abad ke...", opts:["Abad ke-7","Abad ke-9","Abad ke-11","Abad ke-13","Abad ke-15"], ans:3, expl:"Pengaruh Islam berkembang pesat di Nusantara pada abad ke-13, ditandai dengan berdirinya Kerajaan Samudera Pasai." },
+  { topik:"Islam", q:"Jalur utama masuknya agama Islam ke Indonesia adalah melalui...", opts:["Militer","Pernikahan","Pendidikan","Perdagangan","Penaklukan"], ans:3, expl:"Perdagangan adalah jalur paling utama masuknya Islam ke Indonesia. Pedagang Arab, Persia, dan Gujarat membawa Islam dalam perjalanan dagang mereka." },
+  { topik:"Islam", q:"Alasan utama agama Islam menarik minat masyarakat kecil di awal penyebarannya adalah...", opts:["Mengajarkan penggunaan senjata","Memberikan kekayaan kepada pengikutnya","Tidak mengenal sistem kasta (persamaan derajat)","Memiliki upacara yang mewah","Didukung kerajaan besar"], ans:2, expl:"Islam menarik masyarakat kecil karena tidak mengenal sistem kasta yang membedakan derajat manusia seperti dalam Hindu. Semua manusia setara di hadapan Allah." },
+  { topik:"Islam", q:"Teori masuknya agama Islam yang didukung oleh Snouck Hurgronje adalah...", opts:["Teori Mekkah","Teori Arab","Teori Gujarat","Teori Persia","Teori China"], ans:2, expl:"Teori Gujarat didukung oleh Snouck Hurgronje dan Pijnappel. Bukti utamanya adalah kesamaan batu nisan Sultan Malik as-Saleh dengan batu nisan dari Gujarat, India." },
+  { topik:"Islam", q:"Menurut Teori Mekkah, agama Islam masuk ke Nusantara pada abad ke...", opts:["Abad ke-5","Abad ke-6","Abad ke-7","Abad ke-10","Abad ke-13"], ans:2, expl:"Teori Mekkah (Buya Hamka, van Leur) menyatakan Islam masuk pada abad ke-7 M, dibawa langsung oleh pedagang Arab." },
+  { topik:"Islam", q:"Teori yang menyatakan pengaruh Islam dibawa oleh pedagang Arab adalah...", opts:["Teori Gujarat","Teori Persia","Teori Mekkah","Teori Arab","Teori China"], ans:3, expl:"Teori Arab (T.W. Arnold) menyatakan Islam dibawa oleh pedagang Arab langsung ke Nusantara, sekitar abad ke-7–8 M." },
+  { topik:"Islam", q:"Teori yang memiliki bukti upacara Tabot sebagai peringatan meninggalnya Husain bin Ali adalah...", opts:["Teori Mekkah","Teori Arab","Teori Gujarat","Teori Persia","Teori India"], ans:3, expl:"Teori Persia (Husein Djajadiningrat) didukung oleh bukti upacara Tabot di Bengkulu & Padang, sebagai peringatan wafatnya Husain bin Ali (cucu Nabi Muhammad)." },
+  { topik:"Islam", q:"Tokoh yang mendukung Teori Mekkah adalah...", opts:["Snouck Hurgronje","Husein Djajadiningrat","Buya Hamka","Pijnappel","T.W. Arnold"], ans:2, expl:"Buya Hamka adalah tokoh utama pendukung Teori Mekkah, bersama van Leur. Mereka berpendapat Islam masuk langsung dari Mekkah pada abad ke-7 M." },
+  { topik:"Islam", q:"Teori yang menyatakan agama Islam masuk ke Nusantara sekitar abad VIII adalah...", opts:["Teori Gujarat","Teori Mekkah","Teori Arab","Teori Persia","Teori China"], ans:2, expl:"Teori Arab (T.W. Arnold) menyatakan Islam masuk sekitar abad ke-7–8 M (abad VIII), dibawa pedagang Arab." },
+  { topik:"Islam", q:"Bukti utama masuknya agama Islam di Nusantara menurut Teori Gujarat adalah...", opts:["Upacara Tabot","Berita dari pedagang Arab","Batu nisan Sultan Malik as-Saleh yang mirip batu nisan Gujarat","Kitab-kitab berbahasa Persia","Catatan Marco Polo"], ans:2, expl:"Batu nisan Sultan Malik as-Saleh (raja Samudera Pasai, wafat 1297) memiliki kemiripan dengan batu nisan yang ditemukan di Gujarat, India." },
+  { topik:"Islam", q:"Alasan utama proses masuk dan berkembangnya Islam di Nusantara berjalan damai adalah...", opts:["Jepang melindungi para penyebar Islam","Islam disesuaikan dengan budaya lokal dan tidak dipaksakan","Belanda mengizinkan penyebaran Islam","Kerajaan-kerajaan menolak agama lain","Islam datang bersamaan dengan kekuatan militer"], ans:1, expl:"Islam menyebar secara damai karena para penyebar (pedagang, ulama) menyesuaikan ajaran dengan budaya lokal, tidak memaksakan, dan tidak menggunakan kekerasan." },
+  { topik:"Islam", q:"Metode penyebaran Islam yang paling utama di Nusantara adalah melalui...", opts:["Pernikahan","Pendidikan pesantren","Seni pertunjukan (wayang)","Perdagangan","Peperangan"], ans:3, expl:"Perdagangan adalah metode paling utama. Islam menyebar melalui interaksi dagang di pelabuhan-pelabuhan Nusantara." },
+  { topik:"Kerajaan", q:"Pengelana yang mencatat komoditas pasar internasional Sriwijaya pada abad ke-13 adalah...", opts:["Ibnu Battuta","Fa Hien","I-Tsing","Marco Polo","Zheng He"], ans:3, expl:"Marco Polo, pengelana Italia dari abad ke-13, mencatat komoditas pasar internasional Sriwijaya dalam perjalanannya ke Asia." },
+  { topik:"Kolonialisme", q:"Nama batu besar berlambang kerajaan Portugal yang ditancapkan di wilayah baru yang diduduki adalah...", opts:["Salib Portugis","Padrao","Patrao","Bandeira","Marco"], ans:1, expl:"Padrao adalah batu besar berlambang Kerajaan Portugal yang ditancapkan di setiap wilayah baru yang ditemukan/dikuasai oleh penjelajah Portugis." },
+  { topik:"Kolonialisme", q:"Setelah Konstantinopel dikuasai Ottoman (1453), ke negara mana pengusaha dan pekerja terampil asal Konstantinopel mengungsi?", opts:["Spanyol","Prancis","Italia","Inggris","Belanda"], ans:2, expl:"Setelah jatuhnya Konstantinopel (1453), banyak pengusaha, ilmuwan, dan pekerja terampil mengungsi ke Italia (terutama Venesia dan Genoa), membawa modal dan keahlian mereka." },
+  { topik:"Perlawanan", q:"Ciri utama perjuangan melawan kolonialisme SEBELUM tahun 1908 adalah...", opts:["Bersifat nasional dan menggunakan organisasi modern","Menggunakan jalur diplomasi internasional","Bersifat kedaerahan, dipimpin tokoh lokal, dan mudah dipecah belah","Melibatkan seluruh lapisan masyarakat secara terorganisasi","Berjuang melalui pers dan pendidikan"], ans:2, expl:"Sebelum 1908, perlawanan bersifat kedaerahan/lokal, dipimpin tokoh adat/bangsawan/ulama, menggunakan senjata fisik, dan mudah dipecah belah oleh Belanda (devide et impera)." },
+  { topik:"Perlawanan", q:"Yang BUKAN merupakan ciri perjuangan melawan kolonialisme sebelum tahun 1908 adalah...", opts:["Bersifat kedaerahan","Menggunakan kekuatan fisik/senjata","Dipimpin tokoh adat atau bangsawan","Bersifat nasional dan terorganisasi modern","Mudah dipecah belah oleh Belanda"], ans:3, expl:"Perjuangan bersifat nasional dan terorganisasi modern adalah ciri SETELAH tahun 1908, dimulai dengan berdirinya Budi Utomo." },
+  { topik:"Perlawanan", q:"Ciri utama perjuangan melawan kolonialisme SETELAH tahun 1908 adalah...", opts:["Menggunakan kekuatan fisik dan bersifat lokal","Dipimpin oleh tokoh adat","Bersifat nasional, menggunakan organisasi modern dan diplomasi","Hanya melibatkan kalangan bangsawan","Bergantung pada bantuan luar negeri"], ans:2, expl:"Setelah 1908 (lahirnya Budi Utomo), perjuangan bersifat nasional, menggunakan organisasi modern, dan berjuang melalui diplomasi, pers, dan pendidikan." },
+  { topik:"Pergerakan", q:"Faktor INTERNAL pendorong lahirnya organisasi pergerakan nasional adalah...", opts:["Kemenangan Jepang atas Rusia","Kebangkitan nasionalisme di Asia","Munculnya golongan terpelajar dan kenangan kejayaan masa lalu","Masuknya paham liberalisme dari Eropa","Pengaruh revolusi Amerika dan Prancis"], ans:2, expl:"Faktor internal: kenangan kejayaan masa lalu (Majapahit, Sriwijaya), penderitaan rakyat akibat penjajahan, dan munculnya golongan terpelajar/intelektual pribumi." },
+  { topik:"Pergerakan", q:"Faktor EKSTERNAL pendorong lahirnya organisasi pergerakan nasional adalah...", opts:["Penderitaan rakyat akibat tanam paksa","Kenangan kejayaan Majapahit","Munculnya kaum intelektual pribumi","Kemenangan Jepang atas Rusia tahun 1905","Timbulnya rasa senasib sepenanggungan"], ans:3, expl:"Faktor eksternal: kemenangan Jepang atas Rusia (1905) membuktikan bangsa Asia bisa mengalahkan Eropa, mendorong semangat nasionalisme Asia." },
+  { topik:"Pergerakan", q:"Organisasi Budi Utomo didirikan pada tahun...", opts:["1905","1906","1907","1908","1912"], ans:3, expl:"Budi Utomo didirikan pada 20 Mei 1908 oleh mahasiswa STOVIA, dipelopori Dr. Wahidin Sudirohusodo dan Soetomo. Tanggal ini diperingati sebagai Hari Kebangkitan Nasional." },
+  { topik:"Pergerakan", q:"Tokoh pelopor pendirian organisasi Budi Utomo adalah...", opts:["H.O.S. Tjokroaminoto","K.H. Ahmad Dahlan","Haji Samanhudi","Dr. Wahidin Sudirohusodo","Ir. Soekarno"], ans:3, expl:"Dr. Wahidin Sudirohusodo adalah pelopor ide, dan Soetomo bersama mahasiswa STOVIA yang mewujudkannya pada 20 Mei 1908." },
+  { topik:"Pergerakan", q:"Organisasi modern pertama yang diperingati sebagai Hari Kebangkitan Nasional adalah...", opts:["Serikat Islam","Muhammadiyah","Budi Utomo","Indische Partij","PNI"], ans:2, expl:"Budi Utomo (20 Mei 1908) diperingati sebagai Hari Kebangkitan Nasional, karena dianggap sebagai organisasi modern pertama yang bersifat nasional." },
+  { topik:"Pergerakan", q:"Pendiri organisasi Serikat Islam adalah...", opts:["K.H. Ahmad Dahlan","H.O.S. Tjokroaminoto","Haji Samanhudi","Dr. Wahidin Sudirohusodo","Agus Salim"], ans:2, expl:"Haji Samanhudi adalah pendiri Serikat Dagang Islam (SDI) pada 1905 di Solo, yang kemudian berkembang menjadi Serikat Islam (SI) pada 1912." },
+  { topik:"Pergerakan", q:"Nama awal dari organisasi Serikat Islam adalah...", opts:["Serikat Pedagang Muslim","Perhimpunan Dagang Islam","Serikat Dagang Islam","Organisasi Dagang Muslim","Ikatan Pedagang Islam"], ans:2, expl:"Nama awalnya adalah Serikat Dagang Islam (SDI), didirikan Haji Samanhudi di Solo tahun 1905. Berubah nama menjadi Serikat Islam pada tahun 1912." },
+  { topik:"Pergerakan", q:"Tokoh yang memimpin perubahan nama Serikat Dagang Islam menjadi Serikat Islam adalah...", opts:["Haji Samanhudi","K.H. Ahmad Dahlan","H.O.S. Tjokroaminoto","Agus Salim","Abdul Muis"], ans:2, expl:"H.O.S. Tjokroaminoto mengambil alih kepemimpinan dan mengubah SDI menjadi SI pada 1912, memperluas jangkauan dari sekadar organisasi dagang menjadi organisasi sosial-politik." },
+  { topik:"Pergerakan", q:"Serikat Islam mengalami kemunduran akibat perpecahan internal pada tahun...", opts:["1915","1918","1921","1925","1930"], ans:2, expl:"SI mengalami kemunduran pada tahun 1921 akibat perpecahan antara kubu nasionalis-Islam dengan kubu berhaluan kiri (komunis)." },
+  { topik:"Pergerakan", q:"Pendiri organisasi Muhammadiyah adalah...", opts:["Haji Samanhudi","H.O.S. Tjokroaminoto","Dr. Wahidin Sudirohusodo","K.H. Ahmad Dahlan","K.H. Hasyim Asy'ari"], ans:3, expl:"K.H. Ahmad Dahlan mendirikan Muhammadiyah pada 18 November 1912 di Yogyakarta, sebagai organisasi Islam modernis yang fokus pada pendidikan dan sosial." },
+  { topik:"Pendudukan Jepang", q:"Tujuan utama Jepang menduduki Indonesia adalah...", opts:["Membebaskan Indonesia dari penjajahan Belanda","Menyebarkan budaya Jepang","Menguasai sumber daya alam untuk kepentingan perang","Membangun infrastruktur Indonesia","Melatih tentara Indonesia"], ans:2, expl:"Tujuan utama Jepang menduduki Indonesia adalah menguasai sumber daya alam (terutama minyak bumi, karet, dan hasil tambang) untuk mendukung mesin perang Jepang di Pasifik." },
+  { topik:"Pendudukan Jepang", q:"Nama organisasi yang dibentuk Jepang untuk memobilisasi tenaga kerja Indonesia adalah...", opts:["PETA","Heiho","Romusha","Tonarigumi","Seinendan"], ans:2, expl:"Romusha adalah sistem kerja paksa yang diberlakukan Jepang untuk memobilisasi rakyat Indonesia mengerjakan proyek-proyek infrastruktur perang." },
+  { topik:"Pendudukan Jepang", q:"Organisasi yang dibentuk Jepang untuk melatih tentara Indonesia menghadapi ancaman Sekutu adalah...", opts:["Romusha","Heiho","Seinendan","PETA (Pembela Tanah Air)","Keibodan"], ans:3, expl:"PETA (Pembela Tanah Air) dibentuk Jepang pada Oktober 1943 untuk melatih tentara Indonesia menghadapi ancaman Sekutu." },
+  { topik:"Pendudukan Jepang", q:"Nama gerakan propaganda Jepang yang berisi 'Nippon cahaya Asia, Nippon pelindung Asia, Nippon pemimpin Asia' adalah...", opts:["Gerakan 3B","Gerakan 3A","Gerakan 3S","Gerakan Asia Raya","Gerakan Asia Timur Raya"], ans:1, expl:"Gerakan 3A berisi tiga slogan: Nippon cahaya Asia, Nippon pelindung Asia, Nippon pemimpin Asia. Bertujuan menarik simpati rakyat Indonesia agar mendukung Jepang." },
+  { topik:"Pendudukan Jepang", q:"Indonesia dibagi menjadi berapa daerah militer oleh Jepang?", opts:["2 daerah","3 daerah","4 daerah","5 daerah","6 daerah"], ans:1, expl:"Jepang membagi Indonesia menjadi 3 daerah militer: Jawa-Madura (Tentara ke-16), Sumatera (Tentara ke-25), dan Kalimantan-Indonesia Timur (Armada Selatan ke-2)." },
+  { topik:"Pendudukan Jepang", q:"Istilah modern untuk sistem tonarigumi yang diperkenalkan Jepang adalah...", opts:["Kelurahan","Kecamatan","RW (Rukun Warga)","RT (Rukun Tetangga)","Desa"], ans:3, expl:"Tonarigumi adalah sistem pemerintahan tingkat paling bawah yang dibentuk Jepang, setara dengan RT (Rukun Tetangga) modern." },
+  { topik:"Pendudukan Jepang", q:"Tujuan pembentukan sistem tonarigumi oleh Jepang adalah...", opts:["Meningkatkan kesejahteraan rakyat","Memajukan pendidikan Indonesia","Mengawasi dan memobilisasi rakyat untuk kepentingan Jepang","Mengembangkan budaya gotong royong","Mempersiapkan kemerdekaan Indonesia"], ans:2, expl:"Tonarigumi dibentuk untuk mengawasi aktivitas rakyat dan memobilisasi mereka (untuk romusha, pengumpulan hasil bumi, dll.) demi kepentingan pendudukan Jepang." },
+  { topik:"Pendudukan Jepang", q:"Istilah untuk tenaga kerja yang dipekerjakan paksa di proyek infrastruktur Jepang adalah...", opts:["Heiho","Seinendan","PETA","Romusha","Keibodan"], ans:3, expl:"Romusha adalah tenaga kerja paksa yang diambil dari rakyat Indonesia untuk mengerjakan proyek infrastruktur Jepang seperti jalan, jembatan, dan lapangan terbang." },
+  { topik:"Pendudukan Jepang", q:"Lembaga yang BUKAN termasuk dalam sistem pertahanan semimiliter yang dibentuk Jepang adalah...", opts:["Heiho","Seinendan","Keibodan","PETA","Romusha"], ans:4, expl:"Romusha bukan organisasi semimiliter — ini adalah sistem kerja paksa/sipil. Organisasi semimiliter Jepang di Indonesia antara lain: PETA, Heiho, Seinendan, Keibodan." },
+];
+
+// ═══════════════════════════════════════════════════════════════════
+// APP STATE & LOGIC
+// ═══════════════════════════════════════════════════════════════════
+let cfg = { paket:'A', jumlah:20, mode:'instant' };
+let state = { qs:[], idx:0, answers:[], timer:null, elapsed:0, started:false };
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+}
+
+function showTopic(id) {
+  document.querySelectorAll('.topic-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tp-'+id).classList.add('active');
+  document.getElementById('tbtn-'+id).classList.add('active');
+}
+
+function selectConfig(key, val) {
+  cfg[key] = val;
+  document.querySelectorAll(`[id^="cfg-${key}-"]`).forEach(el => el.classList.remove('selected'));
+  document.getElementById(`cfg-${key}-${val}`).classList.add('selected');
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+
+function startQuiz() {
+  let pool = cfg.paket==='A' ? SOAL_A : cfg.paket==='B' ? SOAL_B : [...SOAL_A,...SOAL_B];
+  pool = shuffle(pool).slice(0, cfg.jumlah);
+  state = { qs:pool, idx:0, answers:new Array(pool.length).fill(null), timer:null, elapsed:0, started:true };
+  document.getElementById('quiz-config').style.display='none';
+  document.getElementById('quiz-active').style.display='block';
+  document.getElementById('quiz-result').style.display='none';
+  document.getElementById('q-total').textContent = pool.length;
+  startTimer();
+  renderQ();
+}
+
+function startTimer() {
+  state.elapsed = 0;
+  clearInterval(state.timer);
+  state.timer = setInterval(()=>{
+    state.elapsed++;
+    const m = Math.floor(state.elapsed/60).toString().padStart(2,'0');
+    const s = (state.elapsed%60).toString().padStart(2,'0');
+    const el = document.getElementById('quiz-timer');
+    el.textContent = m+':'+s;
+    el.className = 'quiz-timer' + (state.elapsed > cfg.jumlah*60 ? ' warning' : '');
+  }, 1000);
+}
+
+function renderQ() {
+  const q = state.qs[state.idx];
+  const chosen = state.answers[state.idx];
+  const revealed = cfg.mode==='instant' && chosen !== null;
+  document.getElementById('q-current').textContent = state.idx+1;
+  const fill = ((state.idx+1)/state.qs.length*100).toFixed(1);
+  document.getElementById('progress-fill').style.width = fill+'%';
+  document.getElementById('btn-prev').disabled = state.idx===0;
+  document.getElementById('btn-next').textContent = state.idx===state.qs.length-1 ? 'Selesai ✓' : 'Selanjutnya →';
+  document.getElementById('btn-next').className = 'btn-nav' + (state.idx===state.qs.length-1?' primary':'');
+
+  const letters = ['A','B','C','D','E'];
+  let optsHtml = q.opts.map((o,i)=>{
+    let cls = 'opt-btn';
+    if(revealed) {
+      if(i===q.ans) cls+=' correct';
+      else if(i===chosen && chosen!==q.ans) cls+=' wrong';
+    } else if(i===chosen) cls+=' selected';
+    return `<button class="${cls}" onclick="selectOpt(${i})" ${revealed?'disabled':''}><span class="opt-letter">${letters[i]}</span>${o}</button>`;
+  }).join('');
+
+  const explHtml = revealed
+    ? `<div class="explanation show"><strong>${chosen===q.ans?'✓ Benar!':'✗ Salah.'}</strong> ${q.expl}</div>`
+    : `<div class="explanation" id="expl-box"></div>`;
+
+  document.getElementById('q-card').innerHTML = `
+    <div class="q-topic-tag">NO. ${state.idx+1} · ${q.topik}</div>
+    <div class="q-text"><span class="q-num">${state.idx+1}.</span>${q.q}</div>
+    <div class="options">${optsHtml}</div>
+    ${explHtml}
+  `;
+}
+
+function selectOpt(i) {
+  if(cfg.mode==='instant' && state.answers[state.idx]!==null) return;
+  state.answers[state.idx] = i;
+  renderQ();
+}
+
+function nextQ() {
+  if(state.idx===state.qs.length-1) { finishQuiz(); return; }
+  state.idx++;
+  renderQ();
+}
+
+function prevQ() {
+  if(state.idx===0) return;
+  state.idx--;
+  renderQ();
+}
+
+function finishQuiz() {
+  clearInterval(state.timer);
+  const m = Math.floor(state.elapsed/60).toString().padStart(2,'0');
+  const s = (state.elapsed%60).toString().padStart(2,'0');
+  const totalTime = m+':'+s;
+  let correct = 0, wrong = 0, blank = 0;
+  state.qs.forEach((q,i)=>{
+    if(state.answers[i]===null) blank++;
+    else if(state.answers[i]===q.ans) correct++;
+    else wrong++;
+  });
+  const score = Math.round(correct/state.qs.length*100);
+  const scoreCls = score>=80?'excellent':score>=60?'good':'poor';
+  const label = score>=80?'🎉 Luar Biasa!':score>=60?'👍 Bagus!':'📚 Perlu Belajar Lagi';
+
+  let reviewHtml = state.qs.map((q,i)=>{
+    const a = state.answers[i];
+    const ok = a===q.ans;
+    const letters = ['A','B','C','D','E'];
+    return `<div class="review-item ${ok?'correct':'wrong'}">
+      <span class="review-icon">${ok?'✓':'✗'}</span>
+      <div>
+        <div style="font-weight:600;margin-bottom:.2rem;">No. ${i+1}: ${q.topik}</div>
+        <div style="font-size:.82rem;">${q.q.substring(0,80)}...</div>
+        ${!ok?`<div style="font-size:.8rem;margin-top:.3rem;color:var(--green);">Jawaban benar: <strong>${letters[q.ans]}. ${q.opts[q.ans]}</strong></div>`:''}
+        <div style="font-size:.78rem;margin-top:.25rem;color:#666;">${q.expl.substring(0,100)}...</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('quiz-active').style.display='none';
+  document.getElementById('quiz-result').style.display='block';
+  document.getElementById('quiz-result').innerHTML = `
+    <div class="result-card">
+      <div style="font-family:'DM Mono',monospace;font-size:.75rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:.5rem;">Hasil Latihan</div>
+      <div class="result-score ${scoreCls}">${score}</div>
+      <div style="font-family:'DM Mono',monospace;font-size:.8rem;color:var(--muted);margin-bottom:.5rem;">/100</div>
+      <div class="result-label">${label}</div>
+      <div class="result-sub">Waktu: ${totalTime} · ${state.qs.length} soal dikerjakan</div>
+      <div class="result-stats">
+        <div class="result-stat c"><strong>${correct}</strong><span>Benar</span></div>
+        <div class="result-stat w"><strong>${wrong}</strong><span>Salah</span></div>
+        <div class="result-stat"><strong>${blank}</strong><span>Kosong</span></div>
+        <div class="result-stat t"><strong>${totalTime}</strong><span>Waktu</span></div>
+      </div>
+      <div>
+        <button class="btn-retry" onclick="retryQuiz()">🔄 Ulangi</button>
+        <button class="btn-retry" style="background:var(--cream);border:1.5px solid var(--border);color:var(--ink);" onclick="resetToConfig()">⚙️ Konfigurasi Baru</button>
+      </div>
+      <div class="result-review">
+        <h3>Rincian Per Soal</h3>
+        ${reviewHtml}
+      </div>
+    </div>
+  `;
+}
+
+function retryQuiz() { startQuiz(); }
+function resetToConfig() {
+  document.getElementById('quiz-config').style.display='block';
+  document.getElementById('quiz-active').style.display='none';
+  document.getElementById('quiz-result').style.display='none';
+}
+</script>
+</body>
+</html>
